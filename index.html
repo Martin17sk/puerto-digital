@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Puerto Digital | Páginas web para pymes en Llanquihue</title>
+  <meta name="description" content="Desarrollo de landing pages, sitios informativos y rediseños web para pymes y negocios locales de la Provincia de Llanquihue." />
+  <meta name="keywords" content="páginas web Puerto Montt, desarrollo web Puerto Varas, páginas web para pymes, diseño web Llanquihue, Puerto Digital" />
+  <meta name="author" content="Puerto Digital" />
+  <meta property="og:title" content="Puerto Digital | Páginas web para pymes" />
+  <meta property="og:description" content="Sitios web modernos, responsivos y accesibles para negocios locales de la Provincia de Llanquihue." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="URL_EDITABLE" />
+  <meta name="theme-color" content="#0F172A" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"]
+          },
+          colors: {
+            night: "#0F172A",
+            tech: "#2563EB",
+            digital: "#06B6D4",
+            ink: "#334155",
+            mist: "#F8FAFC"
+          },
+          boxShadow: {
+            soft: "0 20px 60px rgba(15, 23, 42, 0.10)",
+            glow: "0 18px 48px rgba(37, 99, 235, 0.20)"
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", system-ui, sans-serif;
+    }
+
+    [v-cloak] {
+      display: none;
+    }
+
+    .grid-pattern {
+      background-image:
+        linear-gradient(rgba(37, 99, 235, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.08) 1px, transparent 1px);
+      background-size: 34px 34px;
+    }
+
+    .glass-line {
+      background:
+        linear-gradient(135deg, rgba(37, 99, 235, 0.13), rgba(6, 182, 212, 0.10)),
+        rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+    }
+
+    .mockup-bar span {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    .section-anchor {
+      scroll-margin-top: 96px;
+    }
+  </style>
+</head>
+
+<body class="bg-mist text-ink antialiased">
+  <div id="app" v-cloak>
+    <header
+      class="fixed left-0 right-0 top-0 z-50 border-b transition-all duration-300"
+      :class="hasScrolled ? 'border-slate-200/80 bg-white/95 shadow-sm backdrop-blur-xl' : 'border-white/10 bg-white/90 backdrop-blur-lg'"
+    >
+      <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8" aria-label="Navegación principal">
+        <a href="#inicio" class="flex items-center gap-3" aria-label="Ir al inicio">
+          <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-night text-white shadow-glow">
+            <i data-lucide="network" class="h-5 w-5"></i>
+          </span>
+          <span>
+            <span class="block text-base font-extrabold text-night">{{ siteData.businessName }}</span>
+            <span class="hidden text-xs font-medium text-slate-500 sm:block">{{ siteData.slogan }}</span>
+          </span>
+        </a>
+
+        <div class="hidden items-center gap-7 lg:flex">
+          <a v-for="item in navItems" :key="item.href" :href="item.href" class="text-sm font-semibold text-slate-600 transition hover:text-tech">
+            {{ item.label }}
+          </a>
+        </div>
+
+        <div class="hidden items-center gap-3 lg:flex">
+          <a
+            :href="whatsappLink('Hola, quiero cotizar una página web con Puerto Digital.')"
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-center justify-center gap-2 rounded-lg bg-tech px-4 py-2.5 text-sm font-bold text-white shadow-glow transition hover:-translate-y-0.5 hover:bg-blue-700"
+          >
+            <i data-lucide="message-circle" class="h-4 w-4"></i>
+            Cotizar ahora
+          </a>
+        </div>
+
+        <button
+          type="button"
+          class="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-200 bg-white text-night lg:hidden"
+          @click="mobileMenuOpen = !mobileMenuOpen"
+          :aria-expanded="mobileMenuOpen.toString()"
+          aria-label="Abrir o cerrar menú"
+        >
+          <i :data-lucide="mobileMenuOpen ? 'x' : 'menu'" class="h-5 w-5"></i>
+        </button>
+      </nav>
+
+      <div v-if="mobileMenuOpen" class="border-t border-slate-200 bg-white px-4 py-4 shadow-lg lg:hidden">
+        <div class="mx-auto flex max-w-7xl flex-col gap-2">
+          <a
+            v-for="item in navItems"
+            :key="item.href"
+            :href="item.href"
+            class="rounded-lg px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-100"
+            @click="mobileMenuOpen = false"
+          >
+            {{ item.label }}
+          </a>
+          <a
+            :href="whatsappLink('Hola, quiero cotizar una página web con Puerto Digital.')"
+            target="_blank"
+            rel="noopener"
+            class="mt-2 inline-flex items-center justify-center gap-2 rounded-lg bg-tech px-4 py-3 text-sm font-bold text-white"
+          >
+            <i data-lucide="message-circle" class="h-4 w-4"></i>
+            Cotizar ahora
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- =========================
+      SECCIÓN EDITABLE: HERO
+      Cambia título, bajada y elementos de confianza en siteData.hero.
+      ========================== -->
+      <section id="inicio" class="section-anchor relative overflow-hidden bg-white pt-28 lg:pt-32">
+        <div class="absolute inset-0 grid-pattern opacity-70"></div>
+        <div class="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-blue-50 to-transparent"></div>
+        <div class="relative mx-auto grid max-w-7xl gap-12 px-4 pb-20 pt-8 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:pb-24">
+          <div class="flex flex-col justify-center">
+            <div class="mb-6 inline-flex w-fit items-center gap-2 rounded-lg border border-blue-100 bg-blue-50 px-3 py-2 text-sm font-bold text-tech">
+              <i data-lucide="map-pin" class="h-4 w-4"></i>
+              {{ siteData.location }}
+            </div>
+            <h1 class="max-w-4xl text-4xl font-extrabold leading-tight text-night sm:text-5xl lg:text-6xl">
+              {{ siteData.hero.title }}
+            </h1>
+            <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
+              {{ siteData.hero.subtitle }}
+            </p>
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a
+                :href="whatsappLink('Hola, quiero cotizar una página web con Puerto Digital.')"
+                target="_blank"
+                rel="noopener"
+                class="inline-flex items-center justify-center gap-2 rounded-lg bg-tech px-6 py-4 text-base font-bold text-white shadow-glow transition hover:-translate-y-0.5 hover:bg-blue-700"
+              >
+                <i data-lucide="message-circle" class="h-5 w-5"></i>
+                Cotizar por WhatsApp
+              </a>
+              <a
+                href="#planes"
+                class="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-6 py-4 text-base font-bold text-night transition hover:-translate-y-0.5 hover:border-tech hover:text-tech"
+              >
+                Ver planes
+                <i data-lucide="arrow-down" class="h-5 w-5"></i>
+              </a>
+            </div>
+
+            <div class="mt-9 grid gap-3 sm:grid-cols-2">
+              <div v-for="item in siteData.hero.trustItems" :key="item" class="flex items-center gap-3 text-sm font-semibold text-slate-600">
+                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-cyan-50 text-digital">
+                  <i data-lucide="check" class="h-4 w-4"></i>
+                </span>
+                {{ item }}
+              </div>
+            </div>
+          </div>
+
+          <div class="relative flex items-center justify-center lg:justify-end">
+            <div class="w-full max-w-xl rounded-2xl border border-slate-200 bg-white p-3 shadow-soft">
+              <div class="overflow-hidden rounded-xl border border-slate-200 bg-slate-950">
+                <div class="mockup-bar flex items-center gap-2 border-b border-white/10 bg-slate-900 px-4 py-3">
+                  <span class="bg-rose-400"></span>
+                  <span class="bg-amber-300"></span>
+                  <span class="bg-emerald-400"></span>
+                  <div class="ml-3 h-7 flex-1 rounded-md bg-white/10"></div>
+                </div>
+                <div class="grid gap-4 p-4 sm:grid-cols-[1fr_0.72fr]">
+                  <div class="rounded-xl bg-white p-5">
+                    <div class="mb-5 h-3 w-24 rounded-full bg-blue-100"></div>
+                    <div class="h-8 w-4/5 rounded-lg bg-night"></div>
+                    <div class="mt-3 h-3 w-full rounded-full bg-slate-200"></div>
+                    <div class="mt-2 h-3 w-4/5 rounded-full bg-slate-200"></div>
+                    <div class="mt-6 grid grid-cols-2 gap-3">
+                      <div class="rounded-lg border border-slate-200 p-3">
+                        <div class="h-8 w-8 rounded-lg bg-cyan-100"></div>
+                        <div class="mt-4 h-2 w-16 rounded-full bg-slate-200"></div>
+                        <div class="mt-2 h-2 w-20 rounded-full bg-slate-100"></div>
+                      </div>
+                      <div class="rounded-lg border border-slate-200 p-3">
+                        <div class="h-8 w-8 rounded-lg bg-blue-100"></div>
+                        <div class="mt-4 h-2 w-16 rounded-full bg-slate-200"></div>
+                        <div class="mt-2 h-2 w-20 rounded-full bg-slate-100"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="grid gap-4">
+                    <div class="rounded-xl bg-gradient-to-br from-tech to-digital p-4 text-white">
+                      <div class="flex items-center justify-between">
+                        <i data-lucide="smartphone" class="h-7 w-7"></i>
+                        <span class="rounded-full bg-white/20 px-2 py-1 text-xs font-bold">Mobile</span>
+                      </div>
+                      <div class="mt-8 h-3 w-28 rounded-full bg-white/70"></div>
+                      <div class="mt-2 h-3 w-20 rounded-full bg-white/40"></div>
+                    </div>
+                    <div class="rounded-xl bg-white/10 p-4">
+                      <div class="flex items-center gap-3">
+                        <div class="h-10 w-10 rounded-lg bg-cyan-300/80"></div>
+                        <div class="flex-1">
+                          <div class="h-2.5 w-full rounded-full bg-white/30"></div>
+                          <div class="mt-2 h-2.5 w-2/3 rounded-full bg-white/20"></div>
+                        </div>
+                      </div>
+                      <div class="mt-4 h-10 rounded-lg bg-white text-center text-sm font-extrabold leading-10 text-night">
+                        Contacto rápido
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="servicios" class="section-anchor bg-mist py-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="max-w-3xl">
+            <p class="text-sm font-extrabold uppercase tracking-wide text-tech">Qué hacemos</p>
+            <h2 class="mt-3 text-3xl font-extrabold text-night sm:text-4xl">Presencia digital clara para negocios locales</h2>
+            <p class="mt-4 text-lg leading-8 text-slate-600">
+              Ayudamos a negocios locales a tener una página web clara, profesional y fácil de compartir con sus clientes.
+            </p>
+          </div>
+
+          <div class="mt-10 grid gap-5 md:grid-cols-3">
+            <article v-for="service in siteData.services" :key="service.title" class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
+              <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-50 text-tech">
+                <i :data-lucide="service.icon" class="h-6 w-6"></i>
+              </div>
+              <h3 class="mt-5 text-xl font-extrabold text-night">{{ service.title }}</h3>
+              <p class="mt-3 leading-7 text-slate-600">{{ service.description }}</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white py-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+            <div>
+              <p class="text-sm font-extrabold uppercase tracking-wide text-tech">Servicios incluidos</p>
+              <h2 class="mt-3 text-3xl font-extrabold text-night sm:text-4xl">Funciones útiles, sin complicar el proyecto</h2>
+              <p class="mt-4 leading-8 text-slate-600">
+                Cada web se arma según el objetivo del negocio. Algunas funciones dependen del plan contratado y del contenido disponible.
+              </p>
+            </div>
+            <div class="grid gap-3 sm:grid-cols-2">
+              <div v-for="feature in siteData.includedServices" :key="feature" class="flex items-start gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4">
+                <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-cyan-100 text-cyan-700">
+                  <i data-lucide="check" class="h-4 w-4"></i>
+                </span>
+                <span class="text-sm font-semibold leading-6 text-slate-700">{{ feature }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="planes" class="section-anchor bg-night py-20 text-white">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto max-w-3xl text-center">
+            <p class="text-sm font-extrabold uppercase tracking-wide text-cyan-300">Planes y precios</p>
+            <h2 class="mt-3 text-3xl font-extrabold sm:text-4xl">Precios iniciales claros desde el primer contacto</h2>
+            <p class="mt-4 leading-8 text-slate-300">
+              Valores referenciales para comenzar. El precio final se define según el alcance real de cada proyecto.
+            </p>
+          </div>
+
+          <div class="mt-12 grid gap-6 lg:grid-cols-3">
+            <article
+              v-for="plan in siteData.plans"
+              :key="plan.name"
+              class="relative rounded-xl border p-6"
+              :class="plan.highlighted ? 'border-cyan-300 bg-white text-night shadow-glow' : 'border-white/10 bg-white/5 text-white'"
+            >
+              <div v-if="plan.highlighted" class="absolute -top-4 left-6 rounded-lg bg-cyan-400 px-3 py-1.5 text-xs font-extrabold uppercase tracking-wide text-night">
+                Más solicitado
+              </div>
+              <h3 class="text-2xl font-extrabold">{{ plan.name }}</h3>
+              <p class="mt-4 text-3xl font-extrabold" :class="plan.highlighted ? 'text-tech' : 'text-cyan-300'">{{ plan.price }}</p>
+              <p class="mt-4 leading-7" :class="plan.highlighted ? 'text-slate-600' : 'text-slate-300'">{{ plan.description }}</p>
+              <ul class="mt-6 space-y-3">
+                <li v-for="feature in plan.features" :key="feature" class="flex gap-3 text-sm leading-6">
+                  <i data-lucide="check-circle-2" class="mt-0.5 h-5 w-5 shrink-0" :class="plan.highlighted ? 'text-tech' : 'text-cyan-300'"></i>
+                  <span>{{ feature }}</span>
+                </li>
+              </ul>
+              <a
+                :href="whatsappLink(`Hola, quiero cotizar el plan ${plan.name} de Puerto Digital.`)"
+                target="_blank"
+                rel="noopener"
+                class="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-extrabold transition"
+                :class="plan.highlighted ? 'bg-tech text-white hover:bg-blue-700' : 'bg-white text-night hover:bg-cyan-100'"
+              >
+                Cotizar este plan
+                <i data-lucide="arrow-right" class="h-4 w-4"></i>
+              </a>
+            </article>
+          </div>
+
+          <p class="mx-auto mt-8 max-w-4xl text-center text-sm leading-7 text-slate-300">
+            Los valores son referenciales y pueden variar según cantidad de secciones, contenido, imágenes, dominio, hosting o integraciones adicionales.
+          </p>
+        </div>
+      </section>
+
+      <section id="trabajos" class="section-anchor bg-mist py-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div class="max-w-3xl">
+              <p class="text-sm font-extrabold uppercase tracking-wide text-tech">Trabajos y demos</p>
+              <h2 class="mt-3 text-3xl font-extrabold text-night sm:text-4xl">Portafolio inicial de Puerto Digital</h2>
+              <p class="mt-4 leading-8 text-slate-600">
+                Incluye proyectos reales y demos conceptuales. Las demos muestran posibilidades de diseño, sin presentarse como clientes reales.
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            <article v-for="project in siteData.projects" :key="project.title" class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
+              <div class="relative h-44 bg-slate-900 p-4">
+                <div v-if="project.image" class="h-full rounded-lg bg-cover bg-center" :style="{ backgroundImage: `url('${project.image}')` }"></div>
+                <div v-else class="flex h-full flex-col justify-between rounded-lg bg-gradient-to-br from-slate-800 via-blue-900 to-cyan-700 p-4">
+                  <div class="flex items-center justify-between">
+                    <span class="h-3 w-20 rounded-full bg-white/40"></span>
+                    <span class="rounded-full bg-white/20 px-2 py-1 text-xs font-bold text-white">{{ project.status }}</span>
+                  </div>
+                  <div>
+                    <div class="h-3 w-full rounded-full bg-white/50"></div>
+                    <div class="mt-2 h-3 w-2/3 rounded-full bg-white/30"></div>
+                    <div class="mt-4 grid grid-cols-3 gap-2">
+                      <span class="h-10 rounded-md bg-white/20"></span>
+                      <span class="h-10 rounded-md bg-white/20"></span>
+                      <span class="h-10 rounded-md bg-white/20"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-5">
+                <span class="inline-flex rounded-lg bg-blue-50 px-3 py-1 text-xs font-extrabold text-tech">{{ project.type }}</span>
+                <h3 class="mt-4 text-lg font-extrabold text-night">{{ project.title }}</h3>
+                <p class="mt-3 text-sm leading-6 text-slate-600">{{ project.description }}</p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  <span v-for="tech in project.tech" :key="tech" class="rounded-md bg-slate-100 px-2.5 py-1 text-xs font-bold text-slate-600">{{ tech }}</span>
+                </div>
+                <a
+                  v-if="project.link && project.link !== '#'"
+                  :href="project.link"
+                  target="_blank"
+                  rel="noopener"
+                  class="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-tech hover:text-blue-700"
+                >
+                  Ver proyecto
+                  <i data-lucide="external-link" class="h-4 w-4"></i>
+                </a>
+                <span v-else class="mt-5 inline-flex items-center gap-2 text-sm font-bold text-slate-400">
+                  Link editable
+                  <i data-lucide="link" class="h-4 w-4"></i>
+                </span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="proceso" class="section-anchor bg-white py-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto max-w-3xl text-center">
+            <p class="text-sm font-extrabold uppercase tracking-wide text-tech">Cómo trabajamos</p>
+            <h2 class="mt-3 text-3xl font-extrabold text-night sm:text-4xl">Un proceso simple, ordenado y directo</h2>
+          </div>
+
+          <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            <article v-for="(step, index) in siteData.process" :key="step.title" class="rounded-xl border border-slate-200 bg-slate-50 p-6">
+              <div class="flex items-center gap-4">
+                <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-night text-white">
+                  <i :data-lucide="step.icon" class="h-6 w-6"></i>
+                </div>
+                <span class="text-sm font-extrabold text-tech">Paso {{ index + 1 }}</span>
+              </div>
+              <h3 class="mt-5 text-lg font-extrabold text-night">{{ step.title }}</h3>
+              <p class="mt-3 leading-7 text-slate-600">{{ step.description }}</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-mist py-20">
+        <div class="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8 lg:items-center">
+          <div>
+            <p class="text-sm font-extrabold uppercase tracking-wide text-tech">Por qué elegirnos</p>
+            <h2 class="mt-3 text-3xl font-extrabold text-night sm:text-4xl">Desarrollo web cercano, honesto y pensado para pymes</h2>
+            <p class="mt-4 leading-8 text-slate-600">
+              Puerto Digital se enfoca en resolver lo esencial: que tu negocio se vea profesional, sea fácil de encontrar y tenga canales claros de contacto.
+            </p>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div v-for="benefit in siteData.benefits" :key="benefit.title" class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+              <i :data-lucide="benefit.icon" class="h-6 w-6 text-tech"></i>
+              <h3 class="mt-4 font-extrabold text-night">{{ benefit.title }}</h3>
+              <p class="mt-2 text-sm leading-6 text-slate-600">{{ benefit.description }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white py-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="rounded-2xl bg-night p-6 text-white sm:p-8 lg:p-10">
+            <div class="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+              <div>
+                <p class="text-sm font-extrabold uppercase tracking-wide text-cyan-300">Zona de atención</p>
+                <h2 class="mt-3 text-3xl font-extrabold">Desarrollo web para la Provincia de Llanquihue</h2>
+                <p class="mt-4 leading-8 text-slate-300">
+                  Atendemos emprendimientos, pymes y negocios locales de Puerto Montt, Puerto Varas, Llanquihue, Frutillar, Fresia, Maullín, Los Muermos y alrededores.
+                </p>
+              </div>
+              <div class="flex flex-wrap gap-3">
+                <span v-for="place in siteData.serviceArea" :key="place" class="rounded-lg border border-white/20 bg-white/10 px-4 py-3 text-sm font-extrabold">
+                  {{ place }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-mist py-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-center">
+            <div>
+              <p class="text-sm font-extrabold uppercase tracking-wide text-tech">Testimonios</p>
+              <h2 class="mt-3 text-3xl font-extrabold text-night sm:text-4xl">Opiniones de clientes</h2>
+              <p class="mt-4 leading-8 text-slate-600">
+                Esta sección queda preparada para agregar testimonios reales cuando estén disponibles.
+              </p>
+            </div>
+            <div class="rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center">
+              <i data-lucide="messages-square" class="mx-auto h-10 w-10 text-tech"></i>
+              <p class="mt-4 text-lg font-extrabold text-night">Próximamente agregaremos opiniones de clientes reales.</p>
+              <p class="mt-2 text-sm leading-6 text-slate-500">
+                No usamos testimonios inventados. Cuando existan opiniones verificables, se pueden editar en esta sección.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="preguntas" class="section-anchor bg-white py-20">
+        <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <div class="text-center">
+            <p class="text-sm font-extrabold uppercase tracking-wide text-tech">Preguntas frecuentes</p>
+            <h2 class="mt-3 text-3xl font-extrabold text-night sm:text-4xl">Dudas habituales antes de cotizar</h2>
+          </div>
+
+          <div class="mt-10 divide-y divide-slate-200 rounded-xl border border-slate-200 bg-white">
+            <article v-for="(faq, index) in siteData.faqs" :key="faq.question">
+              <button
+                type="button"
+                class="flex w-full items-center justify-between gap-4 px-5 py-5 text-left"
+                @click="toggleFaq(index)"
+                :aria-expanded="activeFaq === index"
+              >
+                <span class="font-extrabold text-night">{{ faq.question }}</span>
+                <i :data-lucide="activeFaq === index ? 'minus' : 'plus'" class="h-5 w-5 shrink-0 text-tech"></i>
+              </button>
+              <div v-if="activeFaq === index" class="px-5 pb-5 leading-7 text-slate-600">
+                {{ faq.answer }}
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="contacto" class="section-anchor bg-slate-950 py-20 text-white">
+        <div class="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:px-8">
+          <div>
+            <p class="text-sm font-extrabold uppercase tracking-wide text-cyan-300">Contacto</p>
+            <h2 class="mt-3 text-3xl font-extrabold sm:text-4xl">Cuéntanos qué necesita tu negocio</h2>
+            <p class="mt-4 leading-8 text-slate-300">
+              Podemos conversar por WhatsApp o correo. El formulario arma un mensaje listo para enviar por WhatsApp, sin usar backend.
+            </p>
+
+            <div class="mt-8 space-y-4">
+              <a
+                :href="whatsappLink('Hola, quiero cotizar una página web con Puerto Digital.')"
+                target="_blank"
+                rel="noopener"
+                class="flex items-center gap-4 rounded-xl border border-white/10 bg-white/10 p-4 transition hover:bg-white/20"
+              >
+                <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-emerald-500 text-white">
+                  <i data-lucide="message-circle" class="h-5 w-5"></i>
+                </span>
+                <span>
+                  <span class="block font-extrabold">WhatsApp</span>
+                  <span class="text-sm text-slate-300">{{ siteData.whatsapp }}</span>
+                </span>
+              </a>
+              <a
+                :href="`mailto:${siteData.email}`"
+                class="flex items-center gap-4 rounded-xl border border-white/10 bg-white/10 p-4 transition hover:bg-white/20"
+              >
+                <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-tech text-white">
+                  <i data-lucide="mail" class="h-5 w-5"></i>
+                </span>
+                <span>
+                  <span class="block font-extrabold">Correo</span>
+                  <span class="text-sm text-slate-300">{{ siteData.email }}</span>
+                </span>
+              </a>
+              <div class="flex items-center gap-4 rounded-xl border border-white/10 bg-white/10 p-4">
+                <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-cyan-500 text-white">
+                  <i data-lucide="map" class="h-5 w-5"></i>
+                </span>
+                <span>
+                  <span class="block font-extrabold">Zona de atención</span>
+                  <span class="text-sm text-slate-300">{{ siteData.location }}</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <form class="rounded-2xl border border-white/10 bg-white p-5 text-slate-700 shadow-soft sm:p-7" @submit.prevent="sendFormToWhatsApp">
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="name" class="text-sm font-extrabold text-night">Nombre</label>
+                <input id="name" v-model.trim="contactForm.name" type="text" required class="mt-2 w-full rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-tech focus:ring-4 focus:ring-blue-100" placeholder="Tu nombre" />
+              </div>
+              <div>
+                <label for="business" class="text-sm font-extrabold text-night">Negocio</label>
+                <input id="business" v-model.trim="contactForm.business" type="text" class="mt-2 w-full rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-tech focus:ring-4 focus:ring-blue-100" placeholder="Nombre del negocio" />
+              </div>
+              <div class="sm:col-span-2">
+                <label for="service" class="text-sm font-extrabold text-night">Servicio de interés</label>
+                <select id="service" v-model="contactForm.service" class="mt-2 w-full rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-tech focus:ring-4 focus:ring-blue-100">
+                  <option value="Landing Inicial">Landing Inicial</option>
+                  <option value="Sitio Pyme">Sitio Pyme</option>
+                  <option value="Rediseño Web">Rediseño Web</option>
+                  <option value="Aún no estoy seguro">Aún no estoy seguro</option>
+                </select>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="message" class="text-sm font-extrabold text-night">Mensaje</label>
+                <textarea id="message" v-model.trim="contactForm.message" rows="5" required class="mt-2 w-full resize-none rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-tech focus:ring-4 focus:ring-blue-100" placeholder="Cuéntanos qué necesitas: rubro, secciones, si tienes imágenes, dominio, etc."></textarea>
+              </div>
+            </div>
+            <button type="submit" class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-tech px-6 py-4 font-extrabold text-white transition hover:bg-blue-700">
+              Enviar consulta
+              <i data-lucide="send" class="h-5 w-5"></i>
+            </button>
+            <p class="mt-4 text-center text-sm leading-6 text-slate-500">
+              Al enviar, se abrirá WhatsApp con tu mensaje preparado para revisar antes de mandarlo.
+            </p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <a
+      :href="whatsappLink('Hola, quiero cotizar una página web con Puerto Digital.')"
+      target="_blank"
+      rel="noopener"
+      class="fixed bottom-5 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white shadow-glow transition hover:-translate-y-1 hover:bg-emerald-600"
+      aria-label="Cotizar por WhatsApp"
+    >
+      <i data-lucide="message-circle" class="h-7 w-7"></i>
+    </a>
+
+    <footer class="bg-night py-12 text-white">
+      <div class="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-night">
+              <i data-lucide="network" class="h-5 w-5"></i>
+            </span>
+            <span class="font-extrabold">{{ siteData.businessName }}</span>
+          </div>
+          <p class="mt-4 text-sm leading-7 text-slate-300">{{ siteData.shortDescription }}</p>
+        </div>
+        <div>
+          <h3 class="font-extrabold">Servicios</h3>
+          <ul class="mt-4 space-y-3 text-sm text-slate-300">
+            <li v-for="service in siteData.services" :key="service.title">{{ service.title }}</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-extrabold">Zona de atención</h3>
+          <p class="mt-4 text-sm leading-7 text-slate-300">{{ siteData.serviceArea.join(', ') }}.</p>
+        </div>
+        <div>
+          <h3 class="font-extrabold">Contacto</h3>
+          <ul class="mt-4 space-y-3 text-sm text-slate-300">
+            <li>{{ siteData.whatsapp }}</li>
+            <li>{{ siteData.email }}</li>
+            <li v-if="siteData.instagram"><a :href="siteData.instagram" target="_blank" rel="noopener" class="hover:text-cyan-300">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mx-auto mt-10 max-w-7xl border-t border-white/10 px-4 pt-6 text-sm text-slate-400 sm:px-6 lg:px-8">
+        <p>© {{ currentYear }} {{ siteData.businessName }}. Desarrollo web para pymes y negocios locales.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // =========================
+    // EDITAR AQUÍ: SERVICIOS, PRECIOS, PROYECTOS Y CONTACTO
+    // Cambia WhatsApp, correo, redes, planes, proyectos y textos desde este objeto.
+    // Para WhatsApp usa formato chileno: +569XXXXXXXX
+    // En proyectos puedes cambiar link: "#" por la URL real e image: "" por una imagen.
+    // =========================
+    const siteData = {
+      businessName: "Puerto Digital",
+      slogan: "Páginas web modernas para negocios locales",
+      location: "Provincia de Llanquihue, Región de Los Lagos",
+      serviceArea: [
+        "Puerto Montt",
+        "Puerto Varas",
+        "Llanquihue",
+        "Frutillar",
+        "Fresia",
+        "Maullín",
+        "Los Muermos",
+        "Calbuco"
+      ],
+      whatsapp: "+569XXXXXXXX",
+      email: "contacto@puertodigital.cl",
+      instagram: "https://instagram.com/puertodigital",
+      facebook: "",
+      linkedin: "",
+      portfolioUrl: "",
+      shortDescription: "Creamos landing pages, sitios informativos y rediseños web para pymes y emprendimientos que quieren mejorar su presencia digital.",
+      hero: {
+        title: "Páginas web modernas para negocios de la Provincia de Llanquihue",
+        subtitle: "En Puerto Digital creamos landing pages, sitios informativos y rediseños web para pymes y emprendimientos que necesitan verse más profesionales en internet.",
+        trustItems: [
+          "Diseño responsivo",
+          "Ideal para pymes locales",
+          "Contacto directo por WhatsApp",
+          "Compatible con GitHub Pages",
+          "Páginas rápidas y claras"
+        ]
+      },
+      services: [
+        {
+          title: "Landing page",
+          icon: "layout-template",
+          description: "Para negocios que necesitan una página simple, directa y enfocada en contacto."
+        },
+        {
+          title: "Sitio web informativo",
+          icon: "panels-top-left",
+          description: "Para negocios que necesitan presentar servicios, galería, ubicación, información y contacto."
+        },
+        {
+          title: "Rediseño web",
+          icon: "refresh-cw",
+          description: "Para negocios que ya tienen una página, pero se ve antigua, desordenada o poco profesional."
+        }
+      ],
+      includedServices: [
+        "Diseño responsive",
+        "Botón de WhatsApp",
+        "Integración con Google Maps",
+        "Galería de imágenes",
+        "Sección de servicios",
+        "Redes sociales",
+        "Formulario de contacto visual",
+        "Optimización básica para buscadores",
+        "Textos comerciales básicos",
+        "Publicación en GitHub Pages",
+        "Preparación para dominio propio"
+      ],
+      plans: [
+        {
+          name: "Landing Inicial",
+          price: "Desde $80.000 CLP",
+          description: "Ideal para emprendedores o negocios que necesitan una presencia básica y profesional.",
+          features: [
+            "Página única tipo landing",
+            "Diseño responsivo",
+            "Botón de WhatsApp",
+            "Ubicación en Google Maps",
+            "Secciones básicas del negocio",
+            "Publicación en GitHub Pages"
+          ],
+          highlighted: false
+        },
+        {
+          name: "Sitio Pyme",
+          price: "Desde $150.000 CLP",
+          description: "Para negocios que necesitan una web más completa para mostrar servicios, imágenes e información.",
+          features: [
+            "Sitio de varias secciones",
+            "Galería de imágenes",
+            "Servicios o productos destacados",
+            "Formulario de contacto visual",
+            "Redes sociales",
+            "SEO básico local",
+            "Publicación en GitHub Pages"
+          ],
+          highlighted: true
+        },
+        {
+          name: "Rediseño Web",
+          price: "Desde $100.000 CLP",
+          description: "Para negocios que ya tienen una página, pero necesitan mejorar su apariencia y orden.",
+          features: [
+            "Revisión de página actual",
+            "Mejora visual",
+            "Mejora responsive",
+            "Reorganización de secciones",
+            "Botones de contacto",
+            "Optimización básica"
+          ],
+          highlighted: false
+        }
+      ],
+      projects: [
+        {
+          title: "Sitio web para negocio local",
+          type: "Proyecto real",
+          description: "Página web informativa desarrollada para presentar servicios, mostrar imágenes, facilitar el contacto y entregar una presencia profesional en internet.",
+          tech: ["HTML", "CSS", "JavaScript", "Vue"],
+          link: "#",
+          image: "",
+          status: "Real"
+        },
+        {
+          title: "Demo para cafetería",
+          type: "Demo conceptual",
+          description: "Propuesta visual para cafetería local con menú, horarios, ubicación y contacto.",
+          tech: ["Vue 3", "Tailwind CSS"],
+          link: "#",
+          image: "",
+          status: "Demo"
+        },
+        {
+          title: "Demo para cabañas",
+          type: "Demo conceptual",
+          description: "Sitio informativo para alojamiento con galería, ubicación y botón de reserva por WhatsApp.",
+          tech: ["Vue 3", "Tailwind CSS"],
+          link: "#",
+          image: "",
+          status: "Demo"
+        },
+        {
+          title: "Demo para tienda local",
+          type: "Demo conceptual",
+          description: "Página para mostrar productos destacados, información del negocio y contacto directo.",
+          tech: ["Vue 3", "Tailwind CSS"],
+          link: "#",
+          image: "",
+          status: "Demo"
+        }
+      ],
+      process: [
+        {
+          title: "Conversación inicial",
+          icon: "messages-square",
+          description: "Revisamos qué necesita el negocio, qué quiere comunicar y qué canales de contacto usará."
+        },
+        {
+          title: "Definición de objetivos",
+          icon: "target",
+          description: "Aterrizamos el alcance, las secciones necesarias y el tipo de página más conveniente."
+        },
+        {
+          title: "Propuesta de estructura",
+          icon: "list-tree",
+          description: "Ordenamos la información para que la página sea clara, útil y fácil de navegar."
+        },
+        {
+          title: "Diseño y desarrollo",
+          icon: "code-2",
+          description: "Creamos una web moderna, responsiva y preparada para publicarse en internet."
+        },
+        {
+          title: "Revisión con el cliente",
+          icon: "clipboard-check",
+          description: "Ajustamos textos, imágenes y detalles visuales antes de publicar la versión final."
+        },
+        {
+          title: "Publicación de la página",
+          icon: "rocket",
+          description: "Dejamos el sitio publicado y listo para compartir con clientes."
+        }
+      ],
+      benefits: [
+        {
+          title: "Atención directa",
+          icon: "handshake",
+          description: "Comunicación simple durante el proceso, sin pasos innecesarios."
+        },
+        {
+          title: "Enfoque local",
+          icon: "map-pin",
+          description: "Contenido pensado para negocios de la Provincia de Llanquihue y alrededores."
+        },
+        {
+          title: "Páginas claras",
+          icon: "mouse-pointer-click",
+          description: "Diseños fáciles de usar, compartir y entender desde el celular."
+        },
+        {
+          title: "Precios accesibles",
+          icon: "badge-dollar-sign",
+          description: "Planes iniciales para pymes que quieren mejorar su presencia digital."
+        },
+        {
+          title: "Diseño responsivo",
+          icon: "smartphone",
+          description: "Cada página se adapta a celular, tablet, notebook y escritorio."
+        },
+        {
+          title: "Soluciones honestas",
+          icon: "shield-check",
+          description: "Se proponen funciones útiles para el negocio, sin vender extras innecesarios."
+        }
+      ],
+      faqs: [
+        {
+          question: "¿Cuánto demora crear una página web?",
+          answer: "Depende del tipo de proyecto. Una landing page puede demorar menos que un sitio informativo completo. El plazo se define después de revisar la cantidad de secciones, contenido e imágenes."
+        },
+        {
+          question: "¿Los precios son definitivos?",
+          answer: "No. Son valores referenciales desde. El precio final depende del alcance del proyecto."
+        },
+        {
+          question: "¿La página funciona en celular?",
+          answer: "Sí. Todas las páginas se desarrollan con diseño responsivo para celular, tablet y computador."
+        },
+        {
+          question: "¿Necesito tener dominio?",
+          answer: "No necesariamente para comenzar. Se puede publicar inicialmente en GitHub Pages y luego conectar un dominio propio."
+        },
+        {
+          question: "¿Trabajan con hosting?",
+          answer: "Para proyectos estáticos, se puede usar GitHub Pages. Si el cliente necesita correo corporativo, WordPress, backend o funciones más avanzadas, se puede evaluar hosting externo."
+        },
+        {
+          question: "¿Hacen tiendas online?",
+          answer: "Por ahora Puerto Digital se enfoca en landing pages, sitios informativos y rediseños. Tiendas online o pagos en línea pueden evaluarse como una etapa posterior."
+        },
+        {
+          question: "¿Puedo pedir cambios después?",
+          answer: "Sí. Se pueden realizar ajustes según lo acordado. También se puede cotizar mantención básica si el cliente necesita actualizaciones frecuentes."
+        },
+        {
+          question: "¿Qué necesito entregar para comenzar?",
+          answer: "Información del negocio, servicios, imágenes, redes sociales, ubicación, datos de contacto y ejemplos de páginas que te gusten."
+        }
+      ]
+    };
+
+    const { createApp, nextTick } = Vue;
+
+    createApp({
+      data() {
+        return {
+          siteData,
+          mobileMenuOpen: false,
+          hasScrolled: false,
+          activeFaq: 0,
+          contactForm: {
+            name: "",
+            business: "",
+            service: "Sitio Pyme",
+            message: ""
+          },
+          navItems: [
+            { label: "Inicio", href: "#inicio" },
+            { label: "Servicios", href: "#servicios" },
+            { label: "Planes", href: "#planes" },
+            { label: "Trabajos", href: "#trabajos" },
+            { label: "Proceso", href: "#proceso" },
+            { label: "Preguntas", href: "#preguntas" },
+            { label: "Contacto", href: "#contacto" }
+          ]
+        };
+      },
+      computed: {
+        currentYear() {
+          return new Date().getFullYear();
+        }
+      },
+      methods: {
+        whatsappNumber() {
+          return this.siteData.whatsapp.replace(/\D/g, "");
+        },
+        whatsappLink(message) {
+          return `https://wa.me/${this.whatsappNumber()}?text=${encodeURIComponent(message)}`;
+        },
+        toggleFaq(index) {
+          this.activeFaq = this.activeFaq === index ? null : index;
+          this.refreshIcons();
+        },
+        sendFormToWhatsApp() {
+          const business = this.contactForm.business || "No indicado";
+          const message = [
+            "Hola, quiero cotizar una página web con Puerto Digital.",
+            "",
+            `Nombre: ${this.contactForm.name}`,
+            `Negocio: ${business}`,
+            `Servicio de interés: ${this.contactForm.service}`,
+            `Mensaje: ${this.contactForm.message}`
+          ].join("\n");
+
+          window.open(this.whatsappLink(message), "_blank", "noopener");
+        },
+        refreshIcons() {
+          nextTick(() => {
+            lucide.createIcons();
+          });
+        },
+        handleScroll() {
+          this.hasScrolled = window.scrollY > 12;
+        }
+      },
+      mounted() {
+        this.handleScroll();
+        window.addEventListener("scroll", this.handleScroll, { passive: true });
+        this.refreshIcons();
+      },
+      updated() {
+        this.refreshIcons();
+      },
+      beforeUnmount() {
+        window.removeEventListener("scroll", this.handleScroll);
+      }
+    }).mount("#app");
+  </script>
+</body>
+</html>
